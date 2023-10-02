@@ -1,24 +1,34 @@
-const API_KEY="258d191732fc4a1295b1d9de5a23d39e";
-const url="https://newsapi.org/v2/everything?q=";
+const API_KEY = "258d191732fc4a1295b1d9de5a23d39e";
+const baseUrl = "https://newsapi.org/v2/everything?q=";
+const cardsContainer = document.getElementById("cards-container");
+const newsCardTemplate = document.getElementById("template-news-card");
+const searchButton = document.getElementById("search-button");
+const searchText = document.getElementById("search-text");
+let curSelectedNav = null;
 
 window.addEventListener("load", () => fetchNews("India"));
+
+searchButton.addEventListener("click", () => {
+    const query = searchText.value;
+    if (query) {
+        fetchNews(query);
+        curSelectedNav?.classList.remove("active");
+        curSelectedNav = null;
+    }
+});
 
 function reload() {
     window.location.reload();
 }
 
 async function fetchNews(query) {
-    const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);
+    const res = await fetch(`${baseUrl}${query}&apiKey=${API_KEY}`);
     const data = await res.json();
     bindData(data.articles);
 }
 
 function bindData(articles) {
-    const cardsContainer = document.getElementById("cards-container");
-    const newsCardTemplate = document.getElementById("template-news-card");
-
     cardsContainer.innerHTML = "";
-
     articles.forEach((article) => {
         if (!article.urlToImage) return;
         const cardClone = newsCardTemplate.content.cloneNode(true);
@@ -48,22 +58,12 @@ function fillDataInCard(cardClone, article) {
     });
 }
 
-let curSelectedNav = null;
 function onNavItemClick(id) {
     fetchNews(id);
     const navItem = document.getElementById(id);
-    curSelectedNav?.classList.remove("active");
+    if (curSelectedNav) {
+        curSelectedNav.classList.remove("active");
+    }
     curSelectedNav = navItem;
     curSelectedNav.classList.add("active");
 }
-
-const searchButton = document.getElementById("search-button");
-const searchText = document.getElementById("search-text");
-
-searchButton.addEventListener("click", () => {
-    const query = searchText.value;
-    if (!query) return;
-    fetchNews(query);
-    curSelectedNav?.classList.remove("active");
-    curSelectedNav = null;
-});

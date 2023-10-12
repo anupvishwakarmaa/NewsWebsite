@@ -4,11 +4,12 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+
 }
 
 :root {
-    --primary-text-color: #183b56;
-    --secondary-text-color: #577592;
+    --primary-text-color: #dce3e9;
+    --secondary-text-color: #779bbd;
     --accent-color: #2294ed;
     --accent-color-dark: #1d69a3;
 }
@@ -16,6 +17,7 @@
 body {
     font-family: "Poppins", sans-serif;
     color: var(--primary-text-color);
+    background-color: #030a0f;
 }
 
 p {
@@ -128,7 +130,9 @@ main {
     box-shadow: 0 0 4px #d4ecff;
     border-radius: 4px;
     cursor: pointer;
-    background-color: #fff;
+    border-color: #69D1BA;
+    border-width: 2px;
+    background-color:linear-gradient(#69D1BA,#000000,#69D1BA);
     overflow: hidden;
     transition: all 0.3s ease;
 }
@@ -147,6 +151,7 @@ main {
 
 .card-content {
     padding: 12px;
+    background-color:linear-gradient(#69D1BA,#000000);
 }
 
 .news-source {
